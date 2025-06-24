@@ -1,0 +1,57 @@
+/* File: public/css/sidebar.css */
+aside {
+  width: 220px;
+  background-color: rgb(19, 92, 250);
+  color: white;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+aside h2 {
+  text-align: center;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside li {
+  margin: 15px 0;
+}
+
+aside a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar-closed {
+  transform: translateX(-100%);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 100;
+}
+
+.menu-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 101;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  aside {
+    position: absolute;
+    height: 100%;
+    z-index: 100;
+  }
+}
