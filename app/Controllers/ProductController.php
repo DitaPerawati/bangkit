@@ -124,7 +124,7 @@ public function processReduceStock($id)
 
 public function detail($id)
 {
-    $productModel = new \App\Models\ProductModel();
+    $productModel = new \App\Models\LaptopModel();
     $komentarModel = new \App\Models\KomentarModel();
 
     $data['laptop'] = $productModel->find($id);
@@ -133,7 +133,7 @@ public function detail($id)
         ->orderBy('created_at', 'DESC')
         ->findAll();
 
-    return view('bangkit/detail', $data);
+    return view('laptop_detail', $data);
 }
 
 public function komen()
@@ -145,7 +145,7 @@ public function komen()
         'isi'       => $this->request->getPost('isi'),
     ]);
 
-    return redirect()->to('/bangkit/detail/' . $this->request->getPost('laptop_id'));
+    return redirect()->to('/customer/detail/' . $this->request->getPost('laptop_id'));
 }
 
 }

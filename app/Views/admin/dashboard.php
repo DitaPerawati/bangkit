@@ -138,7 +138,9 @@
     <div class="container">
         <?php foreach ($laptops as $index => $laptop): ?>
             <div class="card">
+            <a href="<?= base_url('admin/detail/' . $laptop['id']) ?>">
                 <img src="<?= base_url('img/laptop/' . $laptop['gambar']) ?>" alt="<?= $laptop['nama'] ?>">
+            </a>
                 <div class="card-body">
                     <h3><?= esc($laptop['nama']) ?></h3>
                     <p><?= $laptop['spesifikasi'] ?></p>

@@ -28,6 +28,12 @@ $routes->post('/beli', [Home::class, 'beli']);
 $routes->get('/admin/dashboard', [Admin::class, 'dashboard']); 
 $routes->get('/products', [ProductController::class, 'list']); // Daftar produk
 
+//Detail Produks
+$routes->get('/customer/detail/(:num)', [ProductController::class, 'detail']);
+$routes->get('/admin/detail/(:num)', [ProductController::class, 'detail']);
+$routes->get('/bangkit/detail/(:num)', [ProductController::class, 'detail']);
+$routes->post('/customer/komen', [ProductController::class, 'komen']);
+
 // Routes untuk ProductController
 $routes->group('products', function($routes) {
     // Menampilkan form tambah stok (GET)
@@ -43,8 +49,6 @@ $routes->group('products', function($routes) {
     $routes->post('delete/(:num)', [ProductController::class, 'delete']); 
 
     //detail produk
-    $routes->get('/customer/detail/(:num)', [ProductController::class, 'detail']); // ✅ Tambahkan ini
-    $routes->post('/customer/komen', [ProductController::class, 'komen']);
 });
 
 // Route Dinamis ke Dashboard berdasarkan role
