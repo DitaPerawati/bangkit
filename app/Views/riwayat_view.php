@@ -51,7 +51,7 @@
     <?= view('sidebar') ?>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="main">
         <header>
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
             <h1>Riwayat Transaksi</h1>
@@ -95,8 +95,15 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('sidebar-closed');
+            const main = document.getElementById('main');
+            sidebar.classList.toggle('active');
+            if (main) {
+                main.classList.toggle('shifted');
+            }
         }
     </script>
+
+
+
 </body>
 </html>

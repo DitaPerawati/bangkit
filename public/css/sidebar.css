@@ -1,40 +1,42 @@
-/* File: public/css/sidebar.css */
-aside {
+/* Sidebar Styles */
+#sidebar {
   width: 220px;
-  background-color: rgb(19, 92, 250);
+  background-color: rgb(10, 77, 255);
   color: white;
   padding: 20px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
   transition: transform 0.3s ease;
+  z-index: 1000;
 }
 
-aside h2 {
+#sidebar.active {
+  transform: translateX(0);
+}
+
+#sidebar h2 {
   text-align: center;
 }
 
-aside ul {
+#sidebar ul {
   list-style: none;
   padding: 0;
 }
 
-aside li {
+#sidebar li {
   margin: 15px 0;
 }
 
-aside a {
+#sidebar a {
   color: white;
   text-decoration: none;
   font-weight: bold;
 }
 
-.sidebar-closed {
-  transform: translateX(-100%);
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  z-index: 100;
-}
-
+/* Menu toggle button */
 .menu-toggle {
   position: absolute;
   top: 15px;
@@ -44,14 +46,27 @@ aside a {
   border: none;
   color: white;
   cursor: pointer;
-  z-index: 101;
+  z-index: 1100;
 }
 
-/* Responsive styles */
+/* Konten utama bergeser saat sidebar aktif */
+main.shifted,
+.main-content.shifted {
+  margin-left: 220px;
+  transition: margin-left 0.3s ease;
+}
+
 @media (max-width: 768px) {
-  aside {
-    position: absolute;
-    height: 100%;
-    z-index: 100;
+  #sidebar {
+    transform: translateX(-100%);
+  }
+
+  #sidebar.active {
+    transform: translateX(0);
+  }
+
+  main.shifted,
+  .main-content.shifted {
+    margin-left: 0;
   }
 }

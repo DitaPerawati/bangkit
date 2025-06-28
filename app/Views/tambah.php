@@ -61,7 +61,7 @@
     <?= view('sidebar') ?>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" id="main">
         <header>
             <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
             <h1>Kelola Stok Produk</h1>
@@ -154,9 +154,11 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('sidebar-closed');
+            const main = document.getElementById('main');
+            sidebar.classList.toggle('active');
+            main.classList.toggle('shifted');
         }
-        
+
         function confirmDelete() {
             const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
             modal.show();

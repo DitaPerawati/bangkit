@@ -13,20 +13,17 @@
             display: flex;
             min-height: 100vh;
         }
-
         .main-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
-
         header {
             background-color: rgb(10, 0, 209);
             color: white;
             text-align: center;
             padding: 20px;
         }
-
         .sub-header {
             background-color: rgb(10, 77, 255);
             padding: 10px;
@@ -34,7 +31,6 @@
             font-weight: bold;
             text-align: center;
         }
-
         .container {
             max-width: 800px;
             margin: 30px auto;
@@ -43,7 +39,6 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             padding: 20px;
         }
-
         img {
             width: 100%;
             max-width: 300px;
@@ -51,47 +46,25 @@
             display: block;
             margin: 0 auto 20px;
         }
-
-        h2, h3 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        hr {
-            margin: 30px 0;
-            border: 0;
-            border-top: 1px solid #ddd;
-        }
-
+        h2, h3 { text-align: center; margin-bottom: 10px; }
+        p { font-size: 16px; line-height: 1.5; }
+        hr { margin: 30px 0; border: 0; border-top: 1px solid #ddd; }
         .komentar {
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
             margin-bottom: 10px;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
+        form { display: flex; flex-direction: column; }
+        label { font-weight: bold; margin-top: 10px; }
         input[type="text"],
-        textarea {
+        input[type="number"],
+        textarea,
+        select {
             padding: 8px;
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-
         button {
             margin-top: 15px;
             padding: 10px;
@@ -101,7 +74,13 @@
             cursor: pointer;
             border-radius: 5px;
         }
-
+        #infoTransfer {
+            display: none;
+            background: #eef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
         .footer {
             text-align: center;
             margin-top: auto;
@@ -113,7 +92,7 @@
 </head>
 <body>
 
-<?= view('sidebar')?>
+<?= view('sidebar') ?>
 
 <div class="main-content">
     <header>
@@ -123,13 +102,38 @@
     <div class="sub-header">DETAIL PRODUK</div>
 
     <div class="container">
-    <a href="javascript:history.back()" class="btn btn-secondary mb-3">Kembali</a>
+        <a href="javascript:history.back()" class="btn btn-secondary mb-3">Kembali</a>
         <h2><?= $laptop['nama']; ?></h2>
         <img src="<?= base_url('img/laptop/' . $laptop['gambar']) ?>" alt="<?= $laptop['nama'] ?>">
 
         <p><strong>Spesifikasi:</strong> <?= $laptop['spesifikasi']; ?></p>
         <p><strong>Harga:</strong> Rp <?= number_format($laptop['harga'], 0, ',', '.') ?></p>
         <p><strong>Stok:</strong> <?= $laptop['stok']; ?></p>
+
+        <?php if (session()->get('role') === 'customer' && $laptop['stok'] > 0): ?>
+            <hr>
+            <h3>Form Pembelian</h3>
+            <form action="<?= site_url('/beli') ?>" method="post">
+                <input type="hidden" name="id" value="<?= $laptop['id'] ?>">
+
+                <label for="jumlah">Jumlah:</label>
+                <input type="number" name="jumlah" id="jumlah" min="1" max="<?= $laptop['stok'] ?>" required>
+
+                <label for="metode_pembayaran">Metode Pembayaran:</label>
+                <select name="metode_pembayaran" id="metode_pembayaran" required>
+                    <option value="cash">Cash</option>
+                    <option value="transfer">Transfer</option>
+                </select>
+
+                <div id="infoTransfer">
+                    <strong>Transfer ke rekening:</strong><br>
+                    Bank BCA: <strong>1234567890</strong><br>
+                    a.n. <strong>Bangkit Computer</strong>
+                </div>
+
+                <button type="submit">Beli Sekarang</button>
+            </form>
+        <?php endif; ?>
 
         <hr>
         <h3>Komentar Customer</h3>
@@ -140,31 +144,38 @@
             </div>
         <?php endforeach; ?>
 
-        <?php if (session()->get('role')==='customer'): ?>
-        <hr>
-        <h3>Tambah Komentar</h3>
-        <form action="<?= base_url('customer/komen') ?>" method="post">
-            <input type="hidden" name="laptop_id" value="<?= $laptop['id'] ?>">
-            <label>Nama:</label>
-            <input type="text" name="nama" required>
-            <label>Komentar:</label>
-            <textarea name="isi" rows="3" required></textarea>
-            <button type="submit">Kirim</button>
-        </form>
-            <?php else: ?>
+        <?php if (session()->get('role') === 'customer'): ?>
+            <hr>
+            <h3>Tambah Komentar</h3>
+            <form action="<?= base_url('customer/komen') ?>" method="post">
+                <input type="hidden" name="laptop_id" value="<?= $laptop['id'] ?>">
+                <label>Nama:</label>
+                <input type="text" name="nama" required>
+                <label>Komentar:</label>
+                <textarea name="isi" rows="3" required></textarea>
+                <button type="submit">Kirim</button>
+            </form>
+        <?php else: ?>
             <p><em>Hanya customer yang dapat menulis komentar.</em></p>
-            <?php endif;?>
+        <?php endif; ?>
     </div>
 
     <div class="footer">
         &copy; <?= date('M Y') ?> Toko Komputer Bangkit. Semua Hak Dilindungi.
     </div>
 </div>
+
 <script>
     function toggleSidebar() {
-        const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('sidebar-closed');
+        document.getElementById('sidebar').classList.toggle('active');
+        document.getElementById('main').classList.toggle('shifted');
     }
+
+    document.getElementById('metode_pembayaran').addEventListener('change', function() {
+        const info = document.getElementById('infoTransfer');
+        info.style.display = this.value === 'transfer' ? 'block' : 'none';
+    });
 </script>
+
 </body>
 </html>

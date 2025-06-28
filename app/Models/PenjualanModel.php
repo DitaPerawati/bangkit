@@ -9,6 +9,6 @@ class PenjualanModel extends Model
     protected $table      = 'penjualan';
     protected $primaryKey = 'id';
 
-    protected $allowedFields = ['laptop_id', 'nama_laptop', 'harga', 'tanggal', 'jumlah', 'total_harga'];
+    protected $allowedFields = ['user_id','laptop_id', 'nama_laptop', 'harga', 'tanggal', 'jumlah', 'total_harga','status','metode_pembayaran'];
 
 }

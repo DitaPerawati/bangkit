@@ -199,6 +199,10 @@
           <a href="#">Forgot Password?</a>
         </div>
         <button type="submit">Sign in</button>
+        <div class="signup-text">
+          Belum punya akun? <a href="<?= site_url('/register') ?>">Daftar di sini</a>
+        </div>
+
       </form>
     </div>
   </div>
